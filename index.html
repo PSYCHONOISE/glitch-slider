@@ -12,7 +12,7 @@
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 108vw; height: 108vh;
       background-size: cover; background-position: center;
-      filter: grayscale(100%) invert(100%) blur(0.3rem);
+      filter: grayscale(100%) invert(100%); /* blur(0.3rem) */
     }
     .carousel {
       position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: auto; max-width: 1024px; max-height: 640px;
@@ -39,7 +39,6 @@
     .carousel-cell {
       margin-right: 20px;
       overflow: hidden;
-      filter: none;
     }
 
     .carousel-cell img {
@@ -63,7 +62,6 @@
 </head>
 <body>
   <div class="bg"></div>
-  <h1>Flickity - fullscreen images wide</h1>
   <div class="carousel">
     <div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://64.media.tumblr.com/c6d8fc247ee0669f045e7e3c64c18f19/845d88d9fa2077d1-9c/s1280x1920/3f785329ef70c6eb0b96dd9d2858095e0a28c036.pnj" /></div>
     <div class="carousel-cell"><img class="carousel-cell-image" data-flickity-lazyload="https://64.media.tumblr.com/f989cde0136ea30959a31dd499108834/845d88d9fa2077d1-2c/s1280x1920/de4cbf4c41cc5c729023bd79d5b66a8eadbdee40.pnj" /></div>
@@ -76,37 +74,11 @@
 
   <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="https://unpkg.com/flickity-fullscreen@1/fullscreen.js"></script>
-  <script src="https://unpkg.com/powerglitch@latest/dist/powerglitch.min.js"></script>
   <script type="text/javascript">
     function getRandomInt(min, max) {
       min = Math.ceil(min); max = Math.floor(max);
       return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
     }
-    PowerGlitch.glitch('.carousel-cell.is-selected', {
-      "playMode": "always",
-      "createContainers": true,
-      "hideOverflow": true,
-      "timing": {
-        "duration": 2000
-      },
-      "glitchTimeSpan": {
-        "start": 0.5,
-        "end": 0.7
-      },
-      "shake": {
-        "velocity": 15,
-        "amplitudeX": 0.2,
-        "amplitudeY": 0.2
-      },
-      "slice": {
-        "count": 21,
-        "velocity": 39,
-        "minHeight": 0.31,
-        "maxHeight": 0.5,
-        "hueRotate": true
-      },
-      "pulse": false
-    });
     var carousel = document.querySelector('.carousel');
     var flkty = new Flickity(carousel, {
       // imagesLoaded: true,
@@ -114,35 +86,14 @@
       fullscreen: true,
       lazyLoad: 3,
       wrapAround: true,
-      // cellAlign: 'center',
-      // contain: true
+      cellAlign: 'center',
+      contain: true
     });
-
-    // document.querySelector('.flickity-fullscreen-button').addEventListener("click", (e) => {
-    //   if (carousel.style.maxWidth == 'none' && carousel.style.maxHeight == 'none') {
-    //     carousel.style.maxWidth = '1024px'
-    //     carousel.style.maxHeight = '640px'
-    //   } else {
-    //     carousel.style.maxWidth = 'none'
-    //     carousel.style.maxHeight = 'none'
-    //   }
-    // });
-
-    // flkty.on('fullscreenChange', function(isFullscreen) {
-    //   if (!isFullscreen) {
-    //     carousel.style.maxHeight = '640px'
-    //     carousel.style.maxWidth = '1024px'
-    //   } else {
-    //     carousel.style.maxHeight = 'none'
-    //     carousel.style.maxWidth = 'none'
-    //   }
-    // });
 
     var imgs = carousel.querySelectorAll('.carousel-cell img');
     // get transform property
     var docStyle = document.documentElement.style;
-    var transformProp = typeof docStyle.transform == 'string' ?
-      'transform' : 'WebkitTransform';
+    var transformProp = typeof docStyle.transform == 'string' ? 'transform' : 'WebkitTransform';
 
     flkty.on( 'scroll', function() {
       var selected = carousel.querySelectorAll('.carousel-cell.is-selected img');
@@ -158,10 +109,6 @@
         var x = ( slide.target + flkty.x ) * -1/Math.sin(Math.PI/i%3) * Math.random();
         img.style[ transformProp ] = 'translateX(' + x  + 'px)';
       });
-    });
-
-    flkty.on('fullscreenChange', function(isFullscreen) {
-
     });
 
   </script>
